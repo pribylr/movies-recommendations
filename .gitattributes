@@ -3,3 +3,4 @@ data/cosine_rec.pkl filter=lfs diff=lfs merge=lfs -text
 data/cosine_sims.pkl filter=lfs diff=lfs merge=lfs -text
 data/data.csv filter=lfs diff=lfs merge=lfs -text
 data/movies_db.pkl filter=lfs diff=lfs merge=lfs -text
+data/Netflix_Dataset_Movie.csv filter=lfs diff=lfs merge=lfs -text
