@@ -6,3 +6,4 @@ data/movies_db.pkl filter=lfs diff=lfs merge=lfs -text
 data/Netflix_Dataset_Movie.csv filter=lfs diff=lfs merge=lfs -text
 data/Netflix_Dataset_Rating.csv filter=lfs diff=lfs merge=lfs -text
 data/pearson_rec.pkl filter=lfs diff=lfs merge=lfs -text
+data/pearson_sims.pkl filter=lfs diff=lfs merge=lfs -text
