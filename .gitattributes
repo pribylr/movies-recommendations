@@ -1,3 +1,4 @@
 data/changed.csv filter=lfs diff=lfs merge=lfs -text
 data/cosine_rec.pkl filter=lfs diff=lfs merge=lfs -text
 data/cosine_sims.pkl filter=lfs diff=lfs merge=lfs -text
+data/data.csv filter=lfs diff=lfs merge=lfs -text
