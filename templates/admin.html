@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <style>
+        .sign-out-button {
+            display: inline-block;
+            background-color: #000000;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<a href="/signout" class="sign-out-button">Sign Out</a>
+<h1>Admin interface</h1>
+    <a href="/admin/rec" class="button">Find recommendations</a>
+    {% if show_choices %}
+        <h2>Choose a similarity function</h2>
+        <form action="/process-choice" method="post">
+            <input type="radio" id="pearson" name="similarity" value="pearson" required>
+            <label for="pearson">Pearson similarity</label><br>
+            <input type="radio" id="spearman" name="similarity" value="spearman">
+            <label for="spearman">Spearman similarity</label><br>
+            <input type="radio" id="cosine" name="similarity" value="cosine">
+            <label for="cosine">Cosine similarity</label><br>
+
+            <h2> How many most similar users?</h2>
+            <input type="text" name="how_many_users" required>
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+</body>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Ratings</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .left, .right, .options, #saveSelection {
+            flex: 1;
+        }
+        .list-item, .option {
+            cursor: pointer;
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            display: inline-block;
+        }
+        .sign-out-button {
+            display: inline-block;
+            background-color: #000000;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        .star-rating {
+            font-size: 18px;
+        }
+        .filled-star {
+            color: gold;
+        }
+        .empty-star {
+            color: lightgray;
+        }
+        .star-option {
+            cursor: pointer;
+            padding: 5px;
+            font-size: 20px; /* Adjust size as needed */
+            color: gold; /* Star color */
+        }
+
+        #listContainer, .options, #saveSelection, #recommendations { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <a href="/signout" class="sign-out-button">Sign Out</a>
+            <h1>User {{ user_id }} interface</h1>
+            <button id="toggleRecommendations">Show Recommendations</button>
+            <div id="recommendations">
+                <h2>Recommendations</h2>
+                <ul>
+                    {% for recommendation in recommendations %}
+                    <li>{{ recommendation }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button id="showList">Show List</button>
+            <div id="listContainer">
+                {% for item in not_rated_movies %}
+                <div class="list-item">{{ item }}</div>
+                {% endfor %}
+            </div>
+            <div class="options">
+                {% for i in range(1, 6) %}
+                <span class="star-option" data-rating="{{ i }}">&#9733;</span> <!-- Use &#9733; for filled star -->
+                {% endfor %}
+            </div>
+            <button id="saveSelection">Save</button>
+        </div>
+        <div class="right">
+            <table>
+                <tr>
+                    <th>Movie</th>
+                    <th>Rating</th>
+                </tr>
+                {% for movie_id, rating in user_ratings.items() %}
+                <tr>
+                    <td>{{ movie_id }}</td>
+                    <td>
+                        <div class="star-rating">
+                            {% for i in range(rating) %}
+                                <span class="filled-star">★</span>
+                            {% endfor %}
+                            {% for i in range(5 - rating) %}
+                                <span class="empty-star">☆</span>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <script>
+        var user_id = "{{ user_id }}";
+        document.getElementById('toggleRecommendations').addEventListener('click', function() {
+            var recommendationsDiv = document.getElementById('recommendations');
+            var button = document.getElementById('toggleRecommendations');
+            if (recommendationsDiv.style.display === 'none') {
+                recommendationsDiv.style.display = 'block';
+                button.textContent = 'Hide Recommendations';
+            } else {
+                recommendationsDiv.style.display = 'none';
+                button.textContent = 'Show Recommendations';
+            }
+        });
+        
+        document.getElementById('showList').addEventListener('click', function() {
+            var listContainer = document.getElementById('listContainer');
+            var button = document.getElementById('showList');
+            if (listContainer.style.display === 'block') {
+                listContainer.style.display = 'none';
+                button.textContent = 'Show List';
+            } else {
+                listContainer.style.display = 'block';
+                button.textContent = 'Hide List';
+            }
+        });
+
+        const items = document.querySelectorAll('.list-item');
+        items.forEach(item => {
+            item.addEventListener('click', function() {
+                document.getElementById('listContainer').innerHTML = this.outerHTML;
+                document.querySelector('.options').style.display = 'flex';
+            });
+        });
+
+        // const options = document.querySelectorAll('.option');
+        // let selectedOption = '';
+        // options.forEach(option => {
+        //     option.addEventListener('click', function() {
+        //         selectedOption = this.textContent;
+        //         options.forEach(opt => opt.style.display = 'none');
+        //         this.style.display = 'block';
+        //         document.getElementById('saveSelection').style.display = 'block';
+        //     });
+        // });
+        const starOptions = document.querySelectorAll('.star-option');
+        starOptions.forEach(star => {
+            star.addEventListener('click', function() {
+                selectedOption = this.getAttribute('data-rating');
+                // Highlight selected star and dim the rest
+                starOptions.forEach(opt => {
+                    opt.style.color = (opt.getAttribute('data-rating') <= selectedOption) ? 'gold' : 'lightgray';
+                });
+                document.getElementById('saveSelection').style.display = 'block';
+            });
+        });
+
+        document.getElementById('saveSelection').addEventListener('click', function() {
+            const selectedItem = document.querySelector('.list-item').textContent;
+            // Example of sending data to the server. Adjust as necessary for your application.
+            fetch('/save-selection', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify({
+                    selected_movie: selectedItem,
+                    selected_rating: selectedOption,
+                    user_id: user_id
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(data.message);
+                    window.location.href = '/process-id?user_id=' + encodeURIComponent(user_id);
+                }
+                else {
+                    throw new Error('Something went wrong');
+                }
+            })
+            //.then(data => console.log(data))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

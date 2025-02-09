@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input and Choice</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h1>Fill in your ID</h1>
+    <form action="/process-id" method="post">
+        <input type="text" name="user_id" required>
+        <input type="submit" value="Submit">
+    </form>
+
+</body>
+</html>
