@@ -10,3 +10,4 @@ data/pearson_sims.pkl filter=lfs diff=lfs merge=lfs -text
 data/spearman_sims.pkl filter=lfs diff=lfs merge=lfs -text
 data/ratings.csv filter=lfs diff=lfs merge=lfs -text
 data/spearman_rec.pkl filter=lfs diff=lfs merge=lfs -text
+data/user_movie_ratings.pkl filter=lfs diff=lfs merge=lfs -text
