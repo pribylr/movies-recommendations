@@ -29,6 +29,8 @@ A simple web application allows users to interact with the recommender system by
 ```sh
 git clone https://github.com/pribylr/movies-recommendations.git
 cd movies-recommendations
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 ## Usage
