@@ -24,17 +24,3 @@ A simple web application allows users to interact with the recommender system by
 - **add ratings** to the movies they have watched.
 - **get updated recommendations** based on the ratings they have given.
 
-## Installation
-### Clone the Repository
-```sh
-git clone https://github.com/pribylr/movies-recommendations.git
-cd movies-recommendations
-pip install -r requirements.txt
-```
-
-## Usage
-### Running the Web App
-```sh
-python app.py
-```
-Access the app in browser at `http://localhost:5000` (or another specified port).
