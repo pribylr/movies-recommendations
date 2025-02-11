@@ -27,12 +27,8 @@ A simple web application allows users to interact with the recommender system by
 ## Installation
 ### Clone the Repository
 ```sh
-git clone https://github.com/yourusername/collaborative-filtering-recommender.git
-cd collaborative-filtering-recommender
-```
-
-### Install Dependencies
-```sh
+git clone https://github.com/pribylr/movies-recommendations.git
+cd movies-recommendations
 pip install -r requirements.txt
 ```
 
@@ -41,4 +37,4 @@ pip install -r requirements.txt
 ```sh
 python app.py
 ```
-This will start the web server, and you can access the app in your browser at `http://localhost:5000` (or another specified port).
+Access the app in browser at `http://localhost:5000` (or another specified port).
